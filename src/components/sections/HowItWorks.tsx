@@ -49,7 +49,7 @@ export function HowItWorks() {
             <h3 className="mt-4 font-heading text-2xl font-medium text-noir">
               {step.title}
             </h3>
-            <p className="mt-3 font-body text-base font-medium text-gris">
+            <p className="mt-3 font-body text-base font-medium text-gris-dark">
               {step.description}
             </p>
           </motion.div>

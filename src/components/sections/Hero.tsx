@@ -54,9 +54,9 @@ export function Hero() {
             href="/inscription"
             variant="primary"
             trackingLocation="hero"
-            trackingLabel="Découvrir l'abonnement"
+            trackingLabel="Choisir mon abonnement"
           >
-            Découvrir l&apos;abonnement
+            Choisir mon abonnement
           </Button>
 
           <p className="mt-4 font-body text-sm italic text-gris">

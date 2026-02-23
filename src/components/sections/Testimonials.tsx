@@ -37,7 +37,7 @@ export function Testimonials() {
             <p className="font-heading text-2xl font-medium italic text-noir md:text-3xl">
               &ldquo;{testimonial.quote}&rdquo;
             </p>
-            <footer className="mt-4 font-body text-base font-medium text-gris">
+            <footer className="mt-4 font-body text-base font-medium text-gris-dark">
               — {testimonial.author}, {testimonial.age}
             </footer>
           </motion.blockquote>

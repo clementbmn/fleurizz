@@ -95,7 +95,7 @@ export function Pricing() {
             <p className="mt-4 font-heading text-5xl font-medium text-noir">
               {plan.price}
             </p>
-            <p className="mt-2 font-body text-sm font-medium text-gris">
+            <p className="mt-2 font-body text-sm font-medium text-gris-dark">
               {plan.subtitle}
             </p>
 
@@ -104,11 +104,11 @@ export function Pricing() {
                 <li
                   key={feature.label}
                   className={`flex items-start gap-3 font-body text-base font-medium ${
-                    feature.included ? "text-noir" : "text-gris"
+                    feature.included ? "text-noir" : "text-gris-dark"
                   }`}
                 >
                   <span
-                    className={`mt-0.5 ${feature.included ? "text-vert" : "text-gris"}`}
+                    className={`mt-0.5 ${feature.included ? "text-vert" : "text-gris-dark"}`}
                   >
                     {feature.included ? "\u2713" : "—"}
                   </span>

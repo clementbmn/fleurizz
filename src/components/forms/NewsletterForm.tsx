@@ -68,10 +68,11 @@ export function NewsletterForm() {
           className="text-center"
         >
           <h3 className="font-heading text-3xl font-medium text-blanc">
-            Merci !
+            Votre place est réservée.
           </h3>
           <p className="mt-4 font-body text-base font-medium text-gris">
-            On vous tient au courant très vite.
+            Nous vous contactons très bientôt pour finaliser votre
+            abonnement.
           </p>
         </motion.div>
       ) : (
@@ -162,7 +163,7 @@ export function NewsletterForm() {
             variant="primary"
             className="w-full"
           >
-            S&apos;inscrire
+            Réserver ma place
           </Button>
         </motion.form>
       )}

@@ -16,15 +16,11 @@ export function FinalCTA() {
             href="/inscription"
             variant="primary"
             trackingLocation="footer_cta"
-            trackingLabel="Rejoindre Fleurizz"
+            trackingLabel="Commencer maintenant"
           >
-            Rejoindre Fleurizz
+            Commencer maintenant
           </Button>
         </div>
-
-        <p className="mt-4 font-body text-sm font-medium text-blanc/70">
-          Inscrivez-vous pour être informé du lancement.
-        </p>
       </div>
     </SectionWrapper>
   );

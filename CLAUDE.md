@@ -53,45 +53,9 @@ src/
 │   └── fonts.ts                # Cormorant + Cormorant Garamond (next/font)
 ```
 
-## Design system
+## Direction artistique
 
-### Couleurs (définies dans globals.css @theme inline)
-
-| Token         | Hex       | Usage                          |
-|---------------|-----------|--------------------------------|
-| `noir`        | `#0D0D0D` | Fond hero/why/footer, textes   |
-| `blanc`       | `#FAFAF8` | Fond clair, espaces            |
-| `rose`        | `#E8C4C8` | CTA primary, accents           |
-| `rose-light`  | `#F5E6E8` | Fond témoignages, hover states |
-| `rose-dark`   | `#D4A0A6` | Textes erreur sur fond sombre  |
-| `vert`        | `#2D4A3E` | Fond CTA final, badges         |
-| `vert-light`  | `#3D6454` | Hover vert                     |
-| `vert-dark`   | `#1B3A2D` | Fonds profonds                 |
-| `gris`        | `#8A8A8A` | Textes secondaires             |
-| `gris-light`  | `#E5E5E3` | Bordures, séparateurs          |
-
-### Typographie
-
-- **`font-heading`** → Cormorant, weight 500. Pour h1, h2, accroches.
-- **`font-body`** → Cormorant Garamond, weight 500. Pour paragraphes, boutons, UI.
-- **Labels** → Cormorant Garamond, weight 600, `uppercase tracking-[0.2em] text-xs`.
-
-### Tokens de design
-
-- Boutons : `rounded-none` (sharp, premium)
-- Cards : `rounded-xl`
-- Badges : `rounded-full`
-- Espacement sections : `py-24` mobile, `md:py-32` desktop
-- Max-width contenu : `max-w-5xl`
-- Transitions : `duration-300 ease-out`
-
-## Ton de voix
-
-- Élégant, pas snob
-- Complice, vouvoiement avec complicité
-- Direct, phrases courtes, percutantes
-- Pas d'emojis, pas de marketing agressif
-- Langue : français
+Voir **[design.md](design.md)** pour la direction artistique complète : palette de couleurs, typographie, tokens de design, ton de voix, structure détaillée de chaque section avec le contenu exact, et principes visuels.
 
 ## Tracking Amplitude
 
