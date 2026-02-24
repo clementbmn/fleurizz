@@ -1,10 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 
 export function Header() {
+  const t = useTranslations("Header");
+
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
@@ -23,7 +26,7 @@ export function Header() {
           trackingLabel="Découvrir"
           className="px-5 py-2.5 text-xs"
         >
-          Découvrir
+          {t("cta")}
         </Button>
       </div>
     </motion.header>

@@ -1,37 +1,48 @@
 "use client";
 
+import { useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "motion/react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/amplitude";
 import { subscribeNewsletter } from "@/lib/actions/newsletter";
-import { useRef, useState } from "react";
+import { Link } from "@/i18n/navigation";
 
-const newsletterSchema = z.object({
-  email: z
-    .string()
-    .min(1, "L'email est requis.")
-    .email("Veuillez entrer un email valide."),
-  firstName: z
-    .string()
-    .max(50, "Le prénom ne doit pas dépasser 50 caractères.")
-    .optional()
-    .or(z.literal("")),
-  gdprConsent: z.literal(true, {
-    message: "Vous devez accepter la politique de confidentialité.",
-  }),
-});
-
-type NewsletterFormData = z.infer<typeof newsletterSchema>;
+type NewsletterFormData = {
+  email: string;
+  firstName?: string;
+  gdprConsent: true;
+};
 
 export function NewsletterForm() {
+  const t = useTranslations("Newsletter");
   const formStartedRef = useRef(false);
   const [submitState, setSubmitState] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [serverError, setServerError] = useState("");
+
+  const newsletterSchema = useMemo(
+    () =>
+      z.object({
+        email: z
+          .string()
+          .min(1, t("emailRequired"))
+          .email(t("emailInvalid")),
+        firstName: z
+          .string()
+          .max(50, t("firstnameMax"))
+          .optional()
+          .or(z.literal("")),
+        gdprConsent: z.literal(true, {
+          message: t("consentRequired"),
+        }),
+      }),
+    [t]
+  );
 
   const {
     register,
@@ -88,11 +99,10 @@ export function NewsletterForm() {
           className="text-center"
         >
           <h3 className="font-heading text-3xl font-medium text-blanc">
-            Votre place est réservée.
+            {t("successTitle")}
           </h3>
           <p className="mt-4 font-body text-base font-medium text-gris">
-            Nous vous contactons très bientôt pour finaliser votre
-            abonnement.
+            {t("successDesc")}
           </p>
         </motion.div>
       ) : (
@@ -111,12 +121,12 @@ export function NewsletterForm() {
               htmlFor="email"
               className="mb-2 block font-body text-xs font-semibold uppercase tracking-[0.2em] text-gris"
             >
-              Email *
+              {t("emailLabel")}
             </label>
             <input
               id="email"
               type="email"
-              placeholder="votre@email.com"
+              placeholder={t("emailPlaceholder")}
               onFocus={handleFocus}
               {...register("email")}
               className="w-full border border-gris/40 bg-transparent px-4 py-3 font-body text-base font-medium text-blanc placeholder:text-gris/50 transition-colors duration-300 focus:border-rose focus:outline-none"
@@ -133,12 +143,12 @@ export function NewsletterForm() {
               htmlFor="firstName"
               className="mb-2 block font-body text-xs font-semibold uppercase tracking-[0.2em] text-gris"
             >
-              Prénom (optionnel)
+              {t("firstnameLabel")}
             </label>
             <input
               id="firstName"
               type="text"
-              placeholder="Votre prénom"
+              placeholder={t("firstnamePlaceholder")}
               onFocus={handleFocus}
               {...register("firstName")}
               className="w-full border border-gris/40 bg-transparent px-4 py-3 font-body text-base font-medium text-blanc placeholder:text-gris/50 transition-colors duration-300 focus:border-rose focus:outline-none"
@@ -161,14 +171,13 @@ export function NewsletterForm() {
               htmlFor="gdprConsent"
               className="font-body text-sm font-medium text-gris"
             >
-              J&apos;accepte de recevoir des emails de Fleurizz. Consultez
-              notre{" "}
-              <a
+              {t("consentText")}{" "}
+              <Link
                 href="/confidentialite"
                 className="text-rose underline transition-colors duration-300 hover:text-blanc"
               >
-                politique de confidentialité
-              </a>
+                {t("consentLink")}
+              </Link>
               .
             </label>
           </div>
@@ -189,8 +198,8 @@ export function NewsletterForm() {
             disabled={submitState === "loading"}
           >
             {submitState === "loading"
-              ? "Envoi en cours..."
-              : "Me prévenir"}
+              ? t("submitLoading")
+              : t("submit")}
           </Button>
         </motion.form>
       )}

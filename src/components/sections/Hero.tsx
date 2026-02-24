@@ -1,10 +1,13 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/amplitude";
 
 export function Hero() {
+  const t = useTranslations("Hero");
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -29,9 +32,9 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="font-heading text-4xl font-medium leading-tight text-blanc md:text-6xl lg:text-7xl"
         >
-          Elle reçoit des fleurs.
+          {t("titleLine1")}
           <br />
-          Vous n&apos;y pensez plus.
+          {t("titleLine2")}
         </motion.h1>
 
         <motion.p
@@ -40,8 +43,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           className="mx-auto mt-8 max-w-2xl font-body text-lg font-medium text-gris md:text-xl"
         >
-          Un bouquet de saison, composé par un artisan fleuriste, livré chaque
-          mois à la personne que vous aimez.
+          {t("subtitle")}
         </motion.p>
 
         <motion.div
@@ -56,11 +58,11 @@ export function Hero() {
             trackingLocation="hero"
             trackingLabel="Choisir mon abonnement"
           >
-            Choisir mon abonnement
+            {t("cta")}
           </Button>
 
           <p className="mt-4 font-body text-sm italic text-gris">
-            À partir de 15€ / mois — Sans engagement
+            {t("price")}
           </p>
         </motion.div>
       </div>

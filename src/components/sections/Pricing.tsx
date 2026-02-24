@@ -1,73 +1,67 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useTranslations } from "next-intl";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 
-interface Feature {
-  label: string;
-  included: boolean;
-}
-
-interface Plan {
-  name: string;
-  price: string;
-  subtitle: string;
-  badge?: string;
-  features: Feature[];
+interface PlanConfig {
+  nameKey: string;
+  priceKey: string;
+  featureKeys: { key: string; included: boolean }[];
+  badge?: boolean;
   highlighted?: boolean;
 }
 
-const plans: Plan[] = [
+const planConfigs: PlanConfig[] = [
   {
-    name: "Essentiel",
-    price: "15€",
-    subtitle: "par mois — sans engagement",
-    features: [
-      { label: "Petit bouquet de saison", included: true },
-      { label: "Livraison incluse", included: true },
-      { label: "Carte personnalisée", included: false },
-      { label: "Variétés rares et fleurs nobles", included: false },
+    nameKey: "plan1Name",
+    priceKey: "plan1Price",
+    featureKeys: [
+      { key: "feature1", included: true },
+      { key: "feature2", included: true },
+      { key: "feature3", included: false },
+      { key: "feature4", included: false },
     ],
   },
   {
-    name: "Signature",
-    price: "25€",
-    subtitle: "par mois — sans engagement",
-    badge: "Populaire",
+    nameKey: "plan2Name",
+    priceKey: "plan2Price",
+    badge: true,
     highlighted: true,
-    features: [
-      { label: "Bouquet de saison généreux", included: true },
-      { label: "Livraison incluse", included: true },
-      { label: "Carte personnalisée avec votre message", included: true },
-      { label: "Variétés rares et fleurs nobles", included: false },
+    featureKeys: [
+      { key: "feature5", included: true },
+      { key: "feature2", included: true },
+      { key: "feature6", included: true },
+      { key: "feature4", included: false },
     ],
   },
   {
-    name: "Prestige",
-    price: "40€",
-    subtitle: "par mois — sans engagement",
-    features: [
-      { label: "Grand bouquet premium", included: true },
-      { label: "Livraison incluse", included: true },
-      { label: "Carte personnalisée avec votre message", included: true },
-      { label: "Variétés rares et fleurs nobles", included: true },
+    nameKey: "plan3Name",
+    priceKey: "plan3Price",
+    featureKeys: [
+      { key: "feature7", included: true },
+      { key: "feature2", included: true },
+      { key: "feature6", included: true },
+      { key: "feature4", included: true },
     ],
   },
 ];
 
 export function Pricing() {
+  const t = useTranslations("Pricing");
+
   return (
     <SectionWrapper sectionName="pricing" className="bg-blanc">
       <h2 className="text-center font-heading text-3xl font-medium text-noir md:text-5xl">
-        Choisissez votre formule
+        {t("title")}
       </h2>
 
       <div className="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
-        {plans.map((plan, index) => (
+        {planConfigs.map((plan, index) => (
           <motion.div
-            key={plan.name}
+            key={plan.nameKey}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -84,25 +78,25 @@ export function Pricing() {
           >
             {plan.badge && (
               <div className="mb-6">
-                <Badge>{plan.badge}</Badge>
+                <Badge>{t("badge")}</Badge>
               </div>
             )}
 
             <h3 className="font-heading text-2xl font-medium text-noir">
-              {plan.name}
+              {t(plan.nameKey)}
             </h3>
 
             <p className="mt-4 font-heading text-5xl font-medium text-noir">
-              {plan.price}
+              {t(plan.priceKey)}
             </p>
             <p className="mt-2 font-body text-sm font-medium text-gris-dark">
-              {plan.subtitle}
+              {t("subtitle")}
             </p>
 
             <ul className="mt-8 flex-1 space-y-4 text-left">
-              {plan.features.map((feature) => (
+              {plan.featureKeys.map((feature) => (
                 <li
-                  key={feature.label}
+                  key={feature.key}
                   className={`flex items-start gap-3 font-body text-base font-medium ${
                     feature.included ? "text-noir" : "text-gris-dark"
                   }`}
@@ -112,7 +106,7 @@ export function Pricing() {
                   >
                     {feature.included ? "\u2713" : "—"}
                   </span>
-                  {feature.label}
+                  {t(feature.key)}
                 </li>
               ))}
             </ul>
@@ -122,10 +116,10 @@ export function Pricing() {
                 href="/inscription"
                 variant="primary"
                 trackingLocation="pricing"
-                trackingLabel={`Choisir ${plan.name}`}
+                trackingLabel={`Choisir ${t(plan.nameKey)}`}
                 className="w-full"
               >
-                Choisir
+                {t("cta")}
               </Button>
             </div>
           </motion.div>
