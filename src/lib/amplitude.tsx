@@ -9,6 +9,7 @@ export function AmplitudeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (AMPLITUDE_API_KEY) {
       amplitude.init(AMPLITUDE_API_KEY, undefined, {
+        serverZone: "EU",
         defaultTracking: {
           sessions: true,
           pageViews: true,

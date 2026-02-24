@@ -6,7 +6,8 @@ import { z } from "zod";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/amplitude";
-import { useRef } from "react";
+import { subscribeNewsletter } from "@/lib/actions/newsletter";
+import { useRef, useState } from "react";
 
 const newsletterSchema = z.object({
   email: z
@@ -27,20 +28,39 @@ type NewsletterFormData = z.infer<typeof newsletterSchema>;
 
 export function NewsletterForm() {
   const formStartedRef = useRef(false);
+  const [submitState, setSubmitState] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [serverError, setServerError] = useState("");
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors },
   } = useForm<NewsletterFormData>({
     resolver: zodResolver(newsletterSchema),
   });
 
-  const onSubmit = (data: NewsletterFormData) => {
+  const onSubmit = async (data: NewsletterFormData) => {
+    setSubmitState("loading");
+    setServerError("");
+
     trackEvent("newsletter_form_submitted", {
       has_firstname: !!data.firstName,
     });
-    console.log("Newsletter signup:", data);
+
+    const result = await subscribeNewsletter({
+      email: data.email,
+      firstName: data.firstName,
+      gdprConsent: data.gdprConsent,
+    });
+
+    if (result.success) {
+      setSubmitState("success");
+    } else {
+      setSubmitState("error");
+      setServerError(result.error);
+    }
   };
 
   const onError = () => {
@@ -59,7 +79,7 @@ export function NewsletterForm() {
 
   return (
     <AnimatePresence mode="wait">
-      {isSubmitSuccessful ? (
+      {submitState === "success" ? (
         <motion.div
           key="success"
           initial={{ opacity: 0, y: 20 }}
@@ -158,12 +178,19 @@ export function NewsletterForm() {
             </p>
           )}
 
+          {serverError && (
+            <p className="font-body text-sm text-rose-dark">{serverError}</p>
+          )}
+
           <Button
             type="submit"
             variant="primary"
             className="w-full"
+            disabled={submitState === "loading"}
           >
-            Réserver ma place
+            {submitState === "loading"
+              ? "Envoi en cours..."
+              : "Me prévenir"}
           </Button>
         </motion.form>
       )}
